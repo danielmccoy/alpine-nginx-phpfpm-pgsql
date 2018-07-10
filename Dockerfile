@@ -1,5 +1,5 @@
 FROM alpine:latest
-MAINTAINER Daniel McCoy <danielmccoy@gmail.com>
+MAINTAINER Eric Ball <eball@ccctechcenter.org>
 
 RUN apk --update --no-cache add \
   nginx \
@@ -21,6 +21,7 @@ RUN apk --update --no-cache add \
   php5-curl \
   php5-zip \
   php5-dom \
+  php5-iconv \
   supervisor
 
 RUN ln -s `which php5` /usr/bin/php
@@ -48,6 +49,9 @@ ADD nginx.conf /etc/nginx/nginx.conf
 
 RUN rm /etc/php5/php-fpm.conf
 ADD php-fpm.conf /etc/php5/php-fpm.conf
+
+RUN rm -f /etc/php5/php.ini
+ADD php.ini /etc/php5/php.ini
 
 VOLUME ["/var/www", "/etc/nginx/sites-enabled"]
 
